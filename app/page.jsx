@@ -45,6 +45,20 @@ const slides = [
   }
 ];
 
+function formatVisitTime(value) {
+  if (!value) return "稍后";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+
+  return new Intl.DateTimeFormat("zh-CN", {
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  }).format(date);
+}
+
 function MapIllustration() {
   return (
     <svg viewBox="0 0 760 620" role="img" aria-labelledby="map-title map-desc">
@@ -143,9 +157,11 @@ export default function Home() {
     const formData = new FormData(event.currentTarget);
     const pet = formData.get("pet");
     const service = formData.get("service");
+    const contactName = formData.get("contactName");
     const phone = formData.get("phone");
+    const visitTime = formatVisitTime(formData.get("visitTime"));
 
-    setFormNote(`${pet}的「${service}」需求已记录，我们会联系 ${phone} 确认到店时间。`);
+    setFormNote(`${contactName}，${pet}的「${service}」需求已记录，期望${visitTime}到店，我们会联系 ${phone} 确认。`);
     event.currentTarget.reset();
   }
 
@@ -232,6 +248,14 @@ export default function Home() {
                     <option>猫咪洗护</option>
                     <option>到店咨询</option>
                   </select>
+                </label>
+                <label>
+                  <span>期望到店时间</span>
+                  <input name="visitTime" type="datetime-local" required />
+                </label>
+                <label>
+                  <span>联系人姓名/称呼</span>
+                  <input name="contactName" type="text" placeholder="例如：王女士" required />
                 </label>
                 <label>
                   <span>联系电话</span>

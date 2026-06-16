@@ -854,16 +854,23 @@ h3 {
 }
 
 .hero-booking .booking-form {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 12px;
 }
 
-.hero-booking .booking-form label:nth-child(3) {
+.hero-booking .booking-form label:nth-child(1),
+.hero-booking .booking-form label:nth-child(2) {
   grid-column: span 2;
 }
 
+.hero-booking .booking-form label:nth-child(3),
+.hero-booking .booking-form label:nth-child(4),
+.hero-booking .booking-form label:nth-child(5) {
+  grid-column: span 3;
+}
+
 .hero-booking .booking-form .button {
-  grid-column: span 2;
+  grid-column: span 3;
 }
 
 .booking-form label {
@@ -1005,7 +1012,11 @@ h3 {
   }
 
   .hero-booking .booking-form,
+  .hero-booking .booking-form label:nth-child(1),
+  .hero-booking .booking-form label:nth-child(2),
   .hero-booking .booking-form label:nth-child(3),
+  .hero-booking .booking-form label:nth-child(4),
+  .hero-booking .booking-form label:nth-child(5),
   .hero-booking .booking-form .button {
     grid-column: auto;
   }

@@ -352,6 +352,32 @@ export default function Home() {
               <p>按毛量、季节和日常打理习惯设计清爽好看的造型。</p>
             </article>
           </div>
+
+          <div className="supply-block" aria-labelledby="supplies-title">
+            <div className="section-heading">
+              <p className="eyebrow">Pet Supplies</p>
+              <h3 id="supplies-title">宠物用品，到店顺手带走</h3>
+              <p>常用消耗品、护理用品和外出小物可到店咨询，按宠物体型和习惯推荐。</p>
+            </div>
+
+            <div className="supply-grid">
+              <article className="supply-card green">
+                <span>Food</span>
+                <h3>主粮与零食</h3>
+                <p>猫狗主粮、训练奖励、洁齿零食，适合日常补货。</p>
+              </article>
+              <article className="supply-card orange">
+                <span>Care</span>
+                <h3>日常护理</h3>
+                <p>洗护香波、梳毛工具、耳眼清洁和除味用品。</p>
+              </article>
+              <article className="supply-card purple">
+                <span>Daily</span>
+                <h3>牵引玩具</h3>
+                <p>牵引绳、胸背、玩具和外出随身小配件。</p>
+              </article>
+            </div>
+          </div>
         </section>
 
         <section className="section visit" id="visit" aria-labelledby="visit-title">

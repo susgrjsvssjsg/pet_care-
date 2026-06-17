@@ -759,6 +759,73 @@ h3 {
   background: #ffe1ef;
 }
 
+.supply-block {
+  margin-top: 28px;
+  padding: 26px;
+  border: 4px solid var(--line);
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, rgba(57, 168, 255, 0.16), rgba(255, 212, 71, 0.24)),
+    #fff;
+  box-shadow: var(--shadow);
+}
+
+.supply-block .section-heading {
+  max-width: 760px;
+  margin-bottom: 20px;
+}
+
+.supply-block h3 {
+  margin-bottom: 8px;
+}
+
+.supply-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.supply-card {
+  min-height: 190px;
+  padding: 20px;
+  border: 3px solid var(--line);
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 5px 5px 0 var(--line);
+}
+
+.supply-card.green {
+  background: #dfffe9;
+}
+
+.supply-card.orange {
+  background: #ffe5cf;
+}
+
+.supply-card.purple {
+  background: #ebe3ff;
+}
+
+.supply-card span {
+  display: inline-flex;
+  min-height: 34px;
+  margin-bottom: 18px;
+  padding: 4px 12px;
+  align-items: center;
+  border: 3px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 3px 3px 0 var(--line);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.supply-card p {
+  color: var(--muted);
+  font-weight: 700;
+}
+
 .service-card span {
   display: grid;
   width: 50px;
@@ -936,6 +1003,7 @@ h3 {
   }
 
   .service-grid,
+  .supply-grid,
   .booking-form {
     grid-template-columns: 1fr 1fr;
   }
@@ -1005,6 +1073,7 @@ h3 {
 
   .store-facts,
   .service-grid,
+  .supply-grid,
   .visit-panel,
   .visit-badges,
   .booking-form {
@@ -1057,9 +1126,14 @@ h3 {
   .booking,
   .visit-panel,
   .service-card,
+  .supply-block,
   .carousel {
     border-radius: 24px;
     box-shadow: 6px 6px 0 var(--line);
+  }
+
+  .supply-block {
+    padding: 20px;
   }
 
   .interior::before {

@@ -1364,17 +1364,6 @@ h3 {
 
   .store-facts,
   .service-grid,
-<<<<<<< HEAD
-  .visit-panel,
-  .visit-badges,
-  .booking-form,
-  .interior-grid {
-=======
-  .supply-grid,
-  .visit-panel,
-  .visit-badges,
-  .booking-form {
->>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
     grid-template-columns: 1fr;
   }
 

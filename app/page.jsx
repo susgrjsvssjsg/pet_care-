@@ -45,6 +45,45 @@ const slides = [
   }
 ];
 
+const reviews = [
+  {
+    quote: "第一次带豆包来洗护，护理师先耐心问了皮肤情况和生活习惯。洗完毛发特别蓬松，脚底和指甲也处理得很细致。",
+    name: "豆包妈妈",
+    pet: "比熊 · 精致洗护",
+    avatar: "豆"
+  },
+  {
+    quote: "我家猫胆子很小，之前洗澡会一直紧张。这次特意安排了安静时段，整个过程节奏很慢，回家后状态也很放松。",
+    name: "糯米家长",
+    pet: "布偶猫 · 温和洗护",
+    avatar: "糯"
+  },
+  {
+    quote: "修剪前会先沟通想要的长度，还结合团子的毛量调整了脸型。造型清爽又好打理，家里人都说像换了一只小狗。",
+    name: "团子爸爸",
+    pet: "泰迪 · 造型修剪",
+    avatar: "团"
+  },
+  {
+    quote: "店里明亮干净，工具和洗护台都收拾得很整齐。护理中还会同步毛孩子的情况，第一次来就觉得很安心。",
+    name: "可乐妈妈",
+    pet: "柯基 · 基础护理",
+    avatar: "可"
+  },
+  {
+    quote: "金毛换毛期掉毛特别厉害，做完深层梳毛后清爽了很多。护理师还教了日常梳毛方法，专业又实用。",
+    name: "七喜家长",
+    pet: "金毛 · 深层梳毛",
+    avatar: "喜"
+  },
+  {
+    quote: "预约回复很快，到店基本不用等。洗护后耳朵、眼周这些小细节都处理得很干净，已经连续来过三次了。",
+    name: "小满妈妈",
+    pet: "雪纳瑞 · 洗护修剪",
+    avatar: "满"
+  }
+];
+
 function formatVisitTime(value) {
   if (!value) return "稍后";
 
@@ -126,6 +165,8 @@ export default function Home() {
   const [routeMode, setRouteMode] = useState("步行");
   const [activeSlide, setActiveSlide] = useState(0);
   const [isCarouselPaused, setIsCarouselPaused] = useState(false);
+  const [activeReview, setActiveReview] = useState(0);
+  const [isReviewPaused, setIsReviewPaused] = useState(false);
   const [formNote, setFormNote] = useState("");
 
   useEffect(() => {
@@ -142,6 +183,16 @@ export default function Home() {
 
     return () => window.clearInterval(timer);
   }, [isCarouselPaused]);
+
+  useEffect(() => {
+    if (isReviewPaused) return undefined;
+
+    const timer = window.setInterval(() => {
+      setActiveReview((current) => (current + 1) % reviews.length);
+    }, 4800);
+
+    return () => window.clearInterval(timer);
+  }, [isReviewPaused]);
 
   async function copyAddress() {
     try {
@@ -199,6 +250,7 @@ export default function Home() {
           <a href="#map" onClick={closeNav}>导航地图</a>
           <a href="#interior" onClick={closeNav}>店内实景</a>
           <a href="#services" onClick={closeNav}>洗护服务</a>
+          <a href="#reviews" onClick={closeNav}>客户评价</a>
           <a href="#visit" onClick={closeNav}>到店信息</a>
           <a className="nav-cta" href="#booking" onClick={closeNav}>预约咨询</a>
         </nav>
@@ -351,6 +403,65 @@ export default function Home() {
               <h3>造型修剪</h3>
               <p>按毛量、季节和日常打理习惯设计清爽好看的造型。</p>
             </article>
+          </div>
+        </section>
+
+        <section className="section reviews" id="reviews" aria-labelledby="reviews-title">
+          <div className="reviews-heading">
+            <div className="section-heading">
+              <p className="eyebrow">Happy Customers</p>
+              <h2 id="reviews-title">毛孩子开心，家长更放心</h2>
+              <p>每一次认真反馈，都是我们把洗护细节做得更好的动力。</p>
+            </div>
+            <div className="review-score" aria-label="客户综合评分5分">
+              <strong>5.0</strong>
+              <span aria-hidden="true">★★★★★</span>
+              <small>客户体验分享</small>
+            </div>
+          </div>
+
+          <div
+            className="review-carousel"
+            onMouseEnter={() => setIsReviewPaused(true)}
+            onMouseLeave={() => setIsReviewPaused(false)}
+            onFocus={() => setIsReviewPaused(true)}
+            onBlur={() => setIsReviewPaused(false)}
+            aria-roledescription="轮播"
+            aria-label="客户评价"
+          >
+            <div className="review-viewport">
+              <div className="review-track" style={{ transform: `translateX(-${activeReview * 100}%)` }}>
+                {reviews.map((review, index) => (
+                  <article className="review-card" key={review.name} aria-hidden={activeReview !== index}>
+                    <span className="review-quote" aria-hidden="true">“</span>
+                    <div>
+                      <div className="review-stars" aria-label="5星评价">★★★★★</div>
+                      <blockquote>{review.quote}</blockquote>
+                      <div className="review-author">
+                        <span className="review-avatar" aria-hidden="true">{review.avatar}</span>
+                        <p><strong>{review.name}</strong><small>{review.pet}</small></p>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+            <div className="review-controls">
+              <button type="button" aria-label="上一条评价" onClick={() => setActiveReview((activeReview - 1 + reviews.length) % reviews.length)}>‹</button>
+              <div className="review-dots" aria-label="选择客户评价">
+                {reviews.map((review, index) => (
+                  <button
+                    className={activeReview === index ? "is-active" : ""}
+                    type="button"
+                    aria-label={`查看第${index + 1}条评价`}
+                    aria-current={activeReview === index ? "true" : undefined}
+                    key={review.name}
+                    onClick={() => setActiveReview(index)}
+                  />
+                ))}
+              </div>
+              <button type="button" aria-label="下一条评价" onClick={() => setActiveReview((activeReview + 1) % reviews.length)}>›</button>
+            </div>
           </div>
         </section>
 

@@ -12,6 +12,12 @@ const slides = document.querySelectorAll("[data-slide]");
 const dots = document.querySelectorAll("[data-carousel-dot]");
 const prevSlideButton = document.querySelector("[data-carousel-prev]");
 const nextSlideButton = document.querySelector("[data-carousel-next]");
+const reviewCarousel = document.querySelector("[data-review-carousel]");
+const reviewTrack = document.querySelector("[data-review-track]");
+const reviewSlides = document.querySelectorAll("[data-review-slide]");
+const reviewDots = document.querySelectorAll("[data-review-dot]");
+const reviewPrev = document.querySelector("[data-review-prev]");
+const reviewNext = document.querySelector("[data-review-next]");
 
 const address = "北京市通州区府东苑13号楼11门";
 const routeMessages = {
@@ -22,6 +28,8 @@ const routeMessages = {
 
 let activeSlide = 0;
 let carouselTimer;
+let activeReview = 0;
+let reviewTimer;
 
 function showSlide(index) {
   activeSlide = (index + slides.length) % slides.length;
@@ -103,6 +111,31 @@ carousel.addEventListener("mouseenter", () => {
 carousel.addEventListener("mouseleave", startCarousel);
 
 startCarousel();
+
+function showReview(index) {
+  activeReview = (index + reviewSlides.length) % reviewSlides.length;
+  reviewTrack.style.transform = `translateX(-${activeReview * 100}%)`;
+  reviewSlides.forEach((slide, slideIndex) => slide.setAttribute("aria-hidden", String(slideIndex !== activeReview)));
+  reviewDots.forEach((dot, dotIndex) => {
+    dot.classList.toggle("is-active", dotIndex === activeReview);
+    dot.toggleAttribute("aria-current", dotIndex === activeReview);
+  });
+}
+
+function startReviewCarousel() {
+  window.clearInterval(reviewTimer);
+  reviewTimer = window.setInterval(() => showReview(activeReview + 1), 4800);
+}
+
+reviewPrev.addEventListener("click", () => { showReview(activeReview - 1); startReviewCarousel(); });
+reviewNext.addEventListener("click", () => { showReview(activeReview + 1); startReviewCarousel(); });
+reviewDots.forEach((dot, index) => dot.addEventListener("click", () => { showReview(index); startReviewCarousel(); }));
+reviewCarousel.addEventListener("mouseenter", () => window.clearInterval(reviewTimer));
+reviewCarousel.addEventListener("mouseleave", startReviewCarousel);
+reviewCarousel.addEventListener("focusin", () => window.clearInterval(reviewTimer));
+reviewCarousel.addEventListener("focusout", startReviewCarousel);
+showReview(0);
+startReviewCarousel();
 
 bookingForm.addEventListener("submit", (event) => {
   event.preventDefault();

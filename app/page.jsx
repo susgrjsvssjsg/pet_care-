@@ -16,41 +16,62 @@ const slides = [
   {
     src: "/assets/interior/interior-01-bath.png",
     alt: "梦佳宠物店内洗护区，小型犬在现代洗护池中接受温和清洁",
+<<<<<<< HEAD
     title: "温和沐浴区",
     description: "独立洗护池配合温和水流，让不同体型的宠物都能舒适清洁。",
     tag: "独立洗护池"
+=======
+    title: "温和沐浴区"
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
   },
   {
     src: "/assets/interior/interior-02-dry.png",
     alt: "梦佳宠物吹干护理区，护理师为蓬松狗狗吹干梳毛",
+<<<<<<< HEAD
     title: "低噪吹干护理",
     description: "分区吹护减少噪声干扰，护理师全程陪伴，缓解宠物紧张情绪。",
     tag: "低噪设备"
+=======
+    title: "低噪吹干护理"
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
   },
   {
     src: "/assets/interior/interior-03-trim.png",
     alt: "梦佳宠物造型修剪区，护理师在美容台上为狗狗修剪造型",
+<<<<<<< HEAD
     title: "精致造型修剪",
     description: "明亮操作台与专业工具整齐分区，细节修剪更清晰、更安心。",
     tag: "专业美容台"
+=======
+    title: "精致造型修剪"
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
   },
   {
     src: "/assets/interior/interior-04-cat.png",
     alt: "梦佳宠物猫咪护理角，护理师为长毛猫轻柔梳毛",
+<<<<<<< HEAD
     title: "猫咪安静护理",
     description: "为猫咪保留安静护理角，降低犬只和陌生环境带来的刺激。",
     tag: "猫狗分区"
+=======
+    title: "猫咪安静护理"
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
   },
   {
     src: "/assets/interior/interior-05-brush.png",
     alt: "梦佳宠物深层梳毛区，护理师为中型犬做浮毛梳理",
+<<<<<<< HEAD
     title: "深层梳毛护理",
     description: "宽敞梳护台便于深层去浮毛，也让中型犬拥有充足活动空间。",
     tag: "宽敞操作区"
+=======
+    title: "深层梳毛护理"
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
   },
   {
     src: "/assets/interior/interior-06-reception.png",
     alt: "梦佳宠物接待区，主人带宠物到店咨询，后方可见洗护空间",
+<<<<<<< HEAD
     title: "接待与等候区",
     description: "开放明亮的前台连接等候与洗护空间，到店流程一目了然。",
     tag: "明亮动线"
@@ -95,6 +116,20 @@ const reviews = [
     avatar: "满"
   }
 ];
+=======
+    title: "接待与等候区"
+  }
+];
+
+function getTomorrowMorningVisitValue() {
+  const date = new Date();
+  date.setDate(date.getDate() + 1);
+  date.setHours(9, 30, 0, 0);
+
+  const timezoneOffset = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() - timezoneOffset).toISOString().slice(0, 16);
+}
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
 
 function formatVisitTime(value) {
   if (!value) return "稍后";
@@ -175,9 +210,20 @@ export default function Home() {
   const [navOpen, setNavOpen] = useState(false);
   const [copyNote, setCopyNote] = useState("");
   const [routeMode, setRouteMode] = useState("步行");
+<<<<<<< HEAD
   const [activeReview, setActiveReview] = useState(0);
   const [isReviewPaused, setIsReviewPaused] = useState(false);
   const [formNote, setFormNote] = useState("");
+=======
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isCarouselPaused, setIsCarouselPaused] = useState(false);
+  const [formNote, setFormNote] = useState("");
+  const [visitTime, setVisitTime] = useState("");
+
+  useEffect(() => {
+    setVisitTime(getTomorrowMorningVisitValue());
+  }, []);
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
 
   useEffect(() => {
     document.body.classList.toggle("nav-open", navOpen);
@@ -185,6 +231,7 @@ export default function Home() {
   }, [navOpen]);
 
   useEffect(() => {
+<<<<<<< HEAD
     if (isReviewPaused) return undefined;
 
     const timer = window.setInterval(() => {
@@ -193,6 +240,17 @@ export default function Home() {
 
     return () => window.clearInterval(timer);
   }, [isReviewPaused]);
+=======
+    if (isCarouselPaused) return undefined;
+
+    const timer = window.setInterval(() => {
+      setActiveSlide((current) => (current + 1) % slides.length);
+    }, 5200);
+
+    return () => window.clearInterval(timer);
+  }, [isCarouselPaused]);
+
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
   async function copyAddress() {
     try {
       await navigator.clipboard.writeText(address);
@@ -213,12 +271,23 @@ export default function Home() {
 
     setFormNote(`${contactName}，${pet}的「${service}」需求已记录，期望${visitTime}到店，我们会联系 ${phone} 确认。`);
     event.currentTarget.reset();
+<<<<<<< HEAD
+=======
+    setVisitTime(getTomorrowMorningVisitValue());
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
   }
 
   function closeNav() {
     setNavOpen(false);
   }
 
+<<<<<<< HEAD
+=======
+  function changeSlide(nextIndex) {
+    setActiveSlide((nextIndex + slides.length) % slides.length);
+  }
+
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
   return (
     <>
       <header className="site-header" data-header>
@@ -245,7 +314,10 @@ export default function Home() {
           <a href="#map" onClick={closeNav}>导航地图</a>
           <a href="#interior" onClick={closeNav}>店内实景</a>
           <a href="#services" onClick={closeNav}>洗护服务</a>
+<<<<<<< HEAD
           <a href="#reviews" onClick={closeNav}>客户评价</a>
+=======
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
           <a href="#visit" onClick={closeNav}>到店信息</a>
           <a className="nav-cta" href="#booking" onClick={closeNav}>预约咨询</a>
         </nav>
@@ -298,7 +370,17 @@ export default function Home() {
                 </label>
                 <label>
                   <span>期望到店时间</span>
+<<<<<<< HEAD
                   <input name="visitTime" type="datetime-local" required />
+=======
+                  <input
+                    name="visitTime"
+                    type="datetime-local"
+                    required
+                    value={visitTime}
+                    onChange={(event) => setVisitTime(event.target.value)}
+                  />
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
                 </label>
                 <label>
                   <span>联系人姓名/称呼</span>
@@ -337,6 +419,7 @@ export default function Home() {
             <p>统一的洗护空间、独立设备和明亮动线，让猫狗护理更安心。</p>
           </div>
 
+<<<<<<< HEAD
           <div className="interior-grid">
             {slides.map((slide, index) => (
               <article className="interior-card" key={slide.src}>
@@ -351,6 +434,44 @@ export default function Home() {
                 </div>
               </article>
             ))}
+=======
+          <div
+            className="carousel"
+            onMouseEnter={() => setIsCarouselPaused(true)}
+            onMouseLeave={() => setIsCarouselPaused(false)}
+          >
+            <div className="carousel-viewport">
+              {slides.map((slide, index) => (
+                <figure
+                  className={`carousel-slide ${activeSlide === index ? "is-active" : ""}`}
+                  key={slide.src}
+                >
+                  <img src={slide.src} alt={slide.alt} />
+                  <figcaption>{slide.title}</figcaption>
+                </figure>
+              ))}
+            </div>
+
+            <div className="carousel-controls">
+              <button type="button" aria-label="上一张店内实景图" onClick={() => changeSlide(activeSlide - 1)}>
+                ‹
+              </button>
+              <div className="carousel-dots" aria-label="店内实景图切换">
+                {slides.map((slide, index) => (
+                  <button
+                    className={activeSlide === index ? "is-active" : ""}
+                    type="button"
+                    aria-label={`查看第${index + 1}张`}
+                    key={slide.src}
+                    onClick={() => changeSlide(index)}
+                  />
+                ))}
+              </div>
+              <button type="button" aria-label="下一张店内实景图" onClick={() => changeSlide(activeSlide + 1)}>
+                ›
+              </button>
+            </div>
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
           </div>
         </section>
 
@@ -377,6 +498,7 @@ export default function Home() {
               <p>按毛量、季节和日常打理习惯设计清爽好看的造型。</p>
             </article>
           </div>
+<<<<<<< HEAD
         </section>
 
         <section className="section reviews" id="reviews" aria-labelledby="reviews-title">
@@ -434,6 +556,32 @@ export default function Home() {
                 ))}
               </div>
               <button type="button" aria-label="下一条评价" onClick={() => setActiveReview((activeReview + 1) % reviews.length)}>›</button>
+=======
+
+          <div className="supply-block" aria-labelledby="supplies-title">
+            <div className="section-heading">
+              <p className="eyebrow">Pet Supplies</p>
+              <h3 id="supplies-title">宠物用品，到店顺手带走</h3>
+              <p>常用消耗品、护理用品和外出小物可到店咨询，按宠物体型和习惯推荐。</p>
+            </div>
+
+            <div className="supply-grid">
+              <article className="supply-card green">
+                <span>Food</span>
+                <h3>主粮与零食</h3>
+                <p>猫狗主粮、训练奖励、洁齿零食，适合日常补货。</p>
+              </article>
+              <article className="supply-card orange">
+                <span>Care</span>
+                <h3>日常护理</h3>
+                <p>洗护香波、梳毛工具、耳眼清洁和除味用品。</p>
+              </article>
+              <article className="supply-card purple">
+                <span>Daily</span>
+                <h3>牵引玩具</h3>
+                <p>牵引绳、胸背、玩具和外出随身小配件。</p>
+              </article>
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
             </div>
           </div>
         </section>

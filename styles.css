@@ -727,6 +727,7 @@ h3 {
   background: var(--green);
 }
 
+<<<<<<< HEAD
 .interior-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -815,6 +816,8 @@ h3 {
   font-weight: 900;
 }
 
+=======
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
 .service-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -866,6 +869,7 @@ h3 {
   font-weight: 700;
 }
 
+<<<<<<< HEAD
 .reviews { position: relative; }
 .reviews-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
 .review-score { display: grid; min-width: 176px; margin-bottom: 28px; padding: 14px 18px; border: 3px solid var(--line); border-radius: 22px; background: var(--yellow); box-shadow: 5px 5px 0 var(--line); text-align: center; }
@@ -892,6 +896,8 @@ h3 {
 .review-dots button { width: 36px; height: 12px; padding: 0; border-radius: 999px; transition: width 220ms ease, background 220ms ease; }
 .review-dots button.is-active { width: 56px; background: var(--green); }
 
+=======
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
 .visit-panel {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.75fr);
@@ -1160,8 +1166,12 @@ h3 {
   .booking,
   .visit-panel,
   .service-card,
+<<<<<<< HEAD
   .carousel,
   .review-carousel {
+=======
+  .carousel {
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
     border-radius: 24px;
     box-shadow: 6px 6px 0 var(--line);
   }
@@ -1184,11 +1194,14 @@ h3 {
     max-width: calc(100% - 24px);
     font-size: 0.9rem;
   }
+<<<<<<< HEAD
 
   .reviews-heading { display: block; }
   .review-score { width: fit-content; }
   .review-card { grid-template-columns: 1fr; gap: 18px; min-height: 420px; padding: 30px 24px; }
   .review-quote { width: 68px; height: 68px; font-size: 4.5rem; }
+=======
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
 }
 
 @media (max-width: 440px) {
@@ -1214,6 +1227,7 @@ h3 {
   .carousel-dots {
     gap: 6px;
   }
+<<<<<<< HEAD
   .review-dots { gap: 5px; }
   .review-dots button { width: 20px; }
   .review-dots button.is-active { width: 32px; }
@@ -1248,4 +1262,6 @@ h3 {
     min-height: 0;
     padding: 18px;
   }
+=======
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
 }

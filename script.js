@@ -7,12 +7,21 @@ const routeNote = document.querySelector("[data-route-note]");
 const routeButtons = document.querySelectorAll("[data-route]");
 const bookingForm = document.querySelector("[data-booking-form]");
 const formNote = document.querySelector("[data-form-note]");
+<<<<<<< HEAD
 const reviewCarousel = document.querySelector("[data-review-carousel]");
 const reviewTrack = document.querySelector("[data-review-track]");
 const reviewSlides = document.querySelectorAll("[data-review-slide]");
 const reviewDots = document.querySelectorAll("[data-review-dot]");
 const reviewPrev = document.querySelector("[data-review-prev]");
 const reviewNext = document.querySelector("[data-review-next]");
+=======
+const carousel = document.querySelector("[data-carousel]");
+const slides = document.querySelectorAll("[data-slide]");
+const dots = document.querySelectorAll("[data-carousel-dot]");
+const prevSlideButton = document.querySelector("[data-carousel-prev]");
+const nextSlideButton = document.querySelector("[data-carousel-next]");
+const visitTimeInput = document.querySelector("[data-visit-time]");
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
 
 const address = "北京市通州区府东苑13号楼11门";
 const routeMessages = {
@@ -21,8 +30,60 @@ const routeMessages = {
   打车: "打车可直接输入“梦佳宠物”。"
 };
 
+<<<<<<< HEAD
 let activeReview = 0;
 let reviewTimer;
+=======
+let activeSlide = 0;
+let carouselTimer;
+
+function getTomorrowMorningVisitValue() {
+  const date = new Date();
+  date.setDate(date.getDate() + 1);
+  date.setHours(9, 30, 0, 0);
+
+  const timezoneOffset = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() - timezoneOffset).toISOString().slice(0, 16);
+}
+
+function formatVisitTime(value) {
+  if (!value) return "稍后";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+
+  return new Intl.DateTimeFormat("zh-CN", {
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  }).format(date);
+}
+
+function setDefaultVisitTime() {
+  visitTimeInput.value = getTomorrowMorningVisitValue();
+}
+
+function showSlide(index) {
+  activeSlide = (index + slides.length) % slides.length;
+
+  slides.forEach((slide, slideIndex) => {
+    slide.classList.toggle("is-active", slideIndex === activeSlide);
+  });
+
+  dots.forEach((dot, dotIndex) => {
+    dot.classList.toggle("is-active", dotIndex === activeSlide);
+  });
+}
+
+function startCarousel() {
+  window.clearInterval(carouselTimer);
+  carouselTimer = window.setInterval(() => {
+    showSlide(activeSlide + 1);
+  }, 5200);
+}
+
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
 function closeNav() {
   nav.classList.remove("is-open");
   document.body.classList.remove("nav-open");
@@ -60,6 +121,7 @@ routeButtons.forEach((button) => {
   });
 });
 
+<<<<<<< HEAD
 function showReview(index) {
   activeReview = (index + reviewSlides.length) % reviewSlides.length;
   reviewTrack.style.transform = `translateX(-${activeReview * 100}%)`;
@@ -84,13 +146,49 @@ reviewCarousel.addEventListener("focusin", () => window.clearInterval(reviewTime
 reviewCarousel.addEventListener("focusout", startReviewCarousel);
 showReview(0);
 startReviewCarousel();
+=======
+prevSlideButton.addEventListener("click", () => {
+  showSlide(activeSlide - 1);
+  startCarousel();
+});
+
+nextSlideButton.addEventListener("click", () => {
+  showSlide(activeSlide + 1);
+  startCarousel();
+});
+
+dots.forEach((dot, index) => {
+  dot.addEventListener("click", () => {
+    showSlide(index);
+    startCarousel();
+  });
+});
+
+carousel.addEventListener("mouseenter", () => {
+  window.clearInterval(carouselTimer);
+});
+
+carousel.addEventListener("mouseleave", startCarousel);
+
+startCarousel();
+setDefaultVisitTime();
+
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
 bookingForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const formData = new FormData(bookingForm);
   const pet = formData.get("pet");
   const service = formData.get("service");
   const phone = formData.get("phone");
+<<<<<<< HEAD
 
   formNote.textContent = `${pet}的「${service}」需求已记录，我们会联系 ${phone} 确认到店时间。`;
   bookingForm.reset();
+=======
+  const visitTime = formatVisitTime(formData.get("visitTime"));
+
+  formNote.textContent = `${pet}的「${service}」需求已记录，期望${visitTime}到店，我们会联系 ${phone} 确认。`;
+  bookingForm.reset();
+  setDefaultVisitTime();
+>>>>>>> 363c0e5c20509cc61e9189e9fa944b60dcab3e6a
 });

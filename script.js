@@ -7,11 +7,6 @@ const routeNote = document.querySelector("[data-route-note]");
 const routeButtons = document.querySelectorAll("[data-route]");
 const bookingForm = document.querySelector("[data-booking-form]");
 const formNote = document.querySelector("[data-form-note]");
-const carousel = document.querySelector("[data-carousel]");
-const slides = document.querySelectorAll("[data-slide]");
-const dots = document.querySelectorAll("[data-carousel-dot]");
-const prevSlideButton = document.querySelector("[data-carousel-prev]");
-const nextSlideButton = document.querySelector("[data-carousel-next]");
 const reviewCarousel = document.querySelector("[data-review-carousel]");
 const reviewTrack = document.querySelector("[data-review-track]");
 const reviewSlides = document.querySelectorAll("[data-review-slide]");
@@ -26,30 +21,8 @@ const routeMessages = {
   打车: "打车可直接输入“梦佳宠物”。"
 };
 
-let activeSlide = 0;
-let carouselTimer;
 let activeReview = 0;
 let reviewTimer;
-
-function showSlide(index) {
-  activeSlide = (index + slides.length) % slides.length;
-
-  slides.forEach((slide, slideIndex) => {
-    slide.classList.toggle("is-active", slideIndex === activeSlide);
-  });
-
-  dots.forEach((dot, dotIndex) => {
-    dot.classList.toggle("is-active", dotIndex === activeSlide);
-  });
-}
-
-function startCarousel() {
-  window.clearInterval(carouselTimer);
-  carouselTimer = window.setInterval(() => {
-    showSlide(activeSlide + 1);
-  }, 5200);
-}
-
 function closeNav() {
   nav.classList.remove("is-open");
   document.body.classList.remove("nav-open");
@@ -87,31 +60,6 @@ routeButtons.forEach((button) => {
   });
 });
 
-prevSlideButton.addEventListener("click", () => {
-  showSlide(activeSlide - 1);
-  startCarousel();
-});
-
-nextSlideButton.addEventListener("click", () => {
-  showSlide(activeSlide + 1);
-  startCarousel();
-});
-
-dots.forEach((dot, index) => {
-  dot.addEventListener("click", () => {
-    showSlide(index);
-    startCarousel();
-  });
-});
-
-carousel.addEventListener("mouseenter", () => {
-  window.clearInterval(carouselTimer);
-});
-
-carousel.addEventListener("mouseleave", startCarousel);
-
-startCarousel();
-
 function showReview(index) {
   activeReview = (index + reviewSlides.length) % reviewSlides.length;
   reviewTrack.style.transform = `translateX(-${activeReview * 100}%)`;
@@ -136,7 +84,6 @@ reviewCarousel.addEventListener("focusin", () => window.clearInterval(reviewTime
 reviewCarousel.addEventListener("focusout", startReviewCarousel);
 showReview(0);
 startReviewCarousel();
-
 bookingForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const formData = new FormData(bookingForm);

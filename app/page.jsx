@@ -16,32 +16,44 @@ const slides = [
   {
     src: "/assets/interior/interior-01-bath.png",
     alt: "梦佳宠物店内洗护区，小型犬在现代洗护池中接受温和清洁",
-    title: "温和沐浴区"
+    title: "温和沐浴区",
+    description: "独立洗护池配合温和水流，让不同体型的宠物都能舒适清洁。",
+    tag: "独立洗护池"
   },
   {
     src: "/assets/interior/interior-02-dry.png",
     alt: "梦佳宠物吹干护理区，护理师为蓬松狗狗吹干梳毛",
-    title: "低噪吹干护理"
+    title: "低噪吹干护理",
+    description: "分区吹护减少噪声干扰，护理师全程陪伴，缓解宠物紧张情绪。",
+    tag: "低噪设备"
   },
   {
     src: "/assets/interior/interior-03-trim.png",
     alt: "梦佳宠物造型修剪区，护理师在美容台上为狗狗修剪造型",
-    title: "精致造型修剪"
+    title: "精致造型修剪",
+    description: "明亮操作台与专业工具整齐分区，细节修剪更清晰、更安心。",
+    tag: "专业美容台"
   },
   {
     src: "/assets/interior/interior-04-cat.png",
     alt: "梦佳宠物猫咪护理角，护理师为长毛猫轻柔梳毛",
-    title: "猫咪安静护理"
+    title: "猫咪安静护理",
+    description: "为猫咪保留安静护理角，降低犬只和陌生环境带来的刺激。",
+    tag: "猫狗分区"
   },
   {
     src: "/assets/interior/interior-05-brush.png",
     alt: "梦佳宠物深层梳毛区，护理师为中型犬做浮毛梳理",
-    title: "深层梳毛护理"
+    title: "深层梳毛护理",
+    description: "宽敞梳护台便于深层去浮毛，也让中型犬拥有充足活动空间。",
+    tag: "宽敞操作区"
   },
   {
     src: "/assets/interior/interior-06-reception.png",
     alt: "梦佳宠物接待区，主人带宠物到店咨询，后方可见洗护空间",
-    title: "接待与等候区"
+    title: "接待与等候区",
+    description: "开放明亮的前台连接等候与洗护空间，到店流程一目了然。",
+    tag: "明亮动线"
   }
 ];
 
@@ -163,8 +175,6 @@ export default function Home() {
   const [navOpen, setNavOpen] = useState(false);
   const [copyNote, setCopyNote] = useState("");
   const [routeMode, setRouteMode] = useState("步行");
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [isCarouselPaused, setIsCarouselPaused] = useState(false);
   const [activeReview, setActiveReview] = useState(0);
   const [isReviewPaused, setIsReviewPaused] = useState(false);
   const [formNote, setFormNote] = useState("");
@@ -175,16 +185,6 @@ export default function Home() {
   }, [navOpen]);
 
   useEffect(() => {
-    if (isCarouselPaused) return undefined;
-
-    const timer = window.setInterval(() => {
-      setActiveSlide((current) => (current + 1) % slides.length);
-    }, 5200);
-
-    return () => window.clearInterval(timer);
-  }, [isCarouselPaused]);
-
-  useEffect(() => {
     if (isReviewPaused) return undefined;
 
     const timer = window.setInterval(() => {
@@ -193,7 +193,6 @@ export default function Home() {
 
     return () => window.clearInterval(timer);
   }, [isReviewPaused]);
-
   async function copyAddress() {
     try {
       await navigator.clipboard.writeText(address);
@@ -218,10 +217,6 @@ export default function Home() {
 
   function closeNav() {
     setNavOpen(false);
-  }
-
-  function changeSlide(nextIndex) {
-    setActiveSlide((nextIndex + slides.length) % slides.length);
   }
 
   return (
@@ -342,42 +337,20 @@ export default function Home() {
             <p>统一的洗护空间、独立设备和明亮动线，让猫狗护理更安心。</p>
           </div>
 
-          <div
-            className="carousel"
-            onMouseEnter={() => setIsCarouselPaused(true)}
-            onMouseLeave={() => setIsCarouselPaused(false)}
-          >
-            <div className="carousel-viewport">
-              {slides.map((slide, index) => (
-                <figure
-                  className={`carousel-slide ${activeSlide === index ? "is-active" : ""}`}
-                  key={slide.src}
-                >
+          <div className="interior-grid">
+            {slides.map((slide, index) => (
+              <article className="interior-card" key={slide.src}>
+                <div className="interior-image">
                   <img src={slide.src} alt={slide.alt} />
-                  <figcaption>{slide.title}</figcaption>
-                </figure>
-              ))}
-            </div>
-
-            <div className="carousel-controls">
-              <button type="button" aria-label="上一张店内实景图" onClick={() => changeSlide(activeSlide - 1)}>
-                ‹
-              </button>
-              <div className="carousel-dots" aria-label="店内实景图切换">
-                {slides.map((slide, index) => (
-                  <button
-                    className={activeSlide === index ? "is-active" : ""}
-                    type="button"
-                    aria-label={`查看第${index + 1}张`}
-                    key={slide.src}
-                    onClick={() => changeSlide(index)}
-                  />
-                ))}
-              </div>
-              <button type="button" aria-label="下一张店内实景图" onClick={() => changeSlide(activeSlide + 1)}>
-                ›
-              </button>
-            </div>
+                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                </div>
+                <div className="interior-copy">
+                  <p className="interior-tag">{slide.tag}</p>
+                  <h3>{slide.title}</h3>
+                  <p>{slide.description}</p>
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 

@@ -45,6 +45,15 @@ const slides = [
   }
 ];
 
+function getTomorrowMorningVisitValue() {
+  const date = new Date();
+  date.setDate(date.getDate() + 1);
+  date.setHours(9, 30, 0, 0);
+
+  const timezoneOffset = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() - timezoneOffset).toISOString().slice(0, 16);
+}
+
 function formatVisitTime(value) {
   if (!value) return "稍后";
 
@@ -127,6 +136,11 @@ export default function Home() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isCarouselPaused, setIsCarouselPaused] = useState(false);
   const [formNote, setFormNote] = useState("");
+  const [visitTime, setVisitTime] = useState("");
+
+  useEffect(() => {
+    setVisitTime(getTomorrowMorningVisitValue());
+  }, []);
 
   useEffect(() => {
     document.body.classList.toggle("nav-open", navOpen);
@@ -163,6 +177,7 @@ export default function Home() {
 
     setFormNote(`${contactName}，${pet}的「${service}」需求已记录，期望${visitTime}到店，我们会联系 ${phone} 确认。`);
     event.currentTarget.reset();
+    setVisitTime(getTomorrowMorningVisitValue());
   }
 
   function closeNav() {
@@ -251,7 +266,13 @@ export default function Home() {
                 </label>
                 <label>
                   <span>期望到店时间</span>
-                  <input name="visitTime" type="datetime-local" required />
+                  <input
+                    name="visitTime"
+                    type="datetime-local"
+                    required
+                    value={visitTime}
+                    onChange={(event) => setVisitTime(event.target.value)}
+                  />
                 </label>
                 <label>
                   <span>联系人姓名/称呼</span>

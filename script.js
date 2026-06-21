@@ -12,6 +12,7 @@ const slides = document.querySelectorAll("[data-slide]");
 const dots = document.querySelectorAll("[data-carousel-dot]");
 const prevSlideButton = document.querySelector("[data-carousel-prev]");
 const nextSlideButton = document.querySelector("[data-carousel-next]");
+const visitTimeInput = document.querySelector("[data-visit-time]");
 
 const address = "北京市通州区府东苑13号楼11门";
 const routeMessages = {
@@ -22,6 +23,33 @@ const routeMessages = {
 
 let activeSlide = 0;
 let carouselTimer;
+
+function getTomorrowMorningVisitValue() {
+  const date = new Date();
+  date.setDate(date.getDate() + 1);
+  date.setHours(9, 30, 0, 0);
+
+  const timezoneOffset = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() - timezoneOffset).toISOString().slice(0, 16);
+}
+
+function formatVisitTime(value) {
+  if (!value) return "稍后";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+
+  return new Intl.DateTimeFormat("zh-CN", {
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  }).format(date);
+}
+
+function setDefaultVisitTime() {
+  visitTimeInput.value = getTomorrowMorningVisitValue();
+}
 
 function showSlide(index) {
   activeSlide = (index + slides.length) % slides.length;
@@ -103,6 +131,7 @@ carousel.addEventListener("mouseenter", () => {
 carousel.addEventListener("mouseleave", startCarousel);
 
 startCarousel();
+setDefaultVisitTime();
 
 bookingForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -110,7 +139,9 @@ bookingForm.addEventListener("submit", (event) => {
   const pet = formData.get("pet");
   const service = formData.get("service");
   const phone = formData.get("phone");
+  const visitTime = formatVisitTime(formData.get("visitTime"));
 
-  formNote.textContent = `${pet}的「${service}」需求已记录，我们会联系 ${phone} 确认到店时间。`;
+  formNote.textContent = `${pet}的「${service}」需求已记录，期望${visitTime}到店，我们会联系 ${phone} 确认。`;
   bookingForm.reset();
+  setDefaultVisitTime();
 });
